@@ -1,13 +1,21 @@
 syntax = "proto3";
-import "google/protobuf/timestamp.proto";
 
 package login;
+
+
+message results
+{
+    string username=1;   
+    string email= 2;      
+    string DOB= 3;       
+    string role= 4;  
+}
 
 message CreateUserRequest{
     string username=1;   
     string email= 2;      
     string password= 3;
-    google.protobuf.Timestamp DOB= 4;       
+    string DOB= 4;       
     string role= 5;    
 }
 
@@ -27,7 +35,29 @@ message LoginUserResopnse
     string message= 1;
 }
 
+message ShowUserRequest
+{
+  
+}
+
+message ShowUserResponse
+{
+  repeated results results =1;
+}
+
+message ShowSingleUserRequest
+{
+    string email= 1;   
+}
+
+message showSingleUserResponse
+{
+    repeated results results =1;
+}
+
 service loginService{
     rpc CreateUser(CreateUserRequest) returns (CreateUserResponse){};
     rpc LoginUser(LoginUserRequest) returns (LoginUserResopnse){};
+    rpc showUser(ShowUserRequest) returns(ShowUserResponse) {};
+    rpc showSingleUser(ShowSingleUserRequest) returns( showSingleUserResponse){};
 }
